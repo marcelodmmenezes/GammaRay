@@ -19,11 +19,11 @@ struct Sphere : public Hittable
 		double t_max,
 		HitRecord& record) const override
 	{
-		Double3 oc = r.origin - center;
+		Double3 ray_origin_to_sphere_center = r.origin - center;
 
 		double a = r.direction.normSquared();
-		double half_b = dot(oc, r.direction);
-		double c = oc.normSquared() - radius * radius;
+		double half_b = dot(ray_origin_to_sphere_center, r.direction);
+		double c = ray_origin_to_sphere_center.normSquared() - radius * radius;
 
 		double discriminant = half_b * half_b - a * c;
 

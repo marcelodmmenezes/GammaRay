@@ -3,10 +3,16 @@
 
 #include "ray.hpp"
 
+#include <memory>
+
+struct Material;
+
 struct HitRecord
 {
 	Double3 position;
 	Double3 normal;
+	std::shared_ptr<Material> material_ptr;
+
 	double t;
 	bool front_face;
 

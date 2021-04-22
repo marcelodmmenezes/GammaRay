@@ -1,16 +1,25 @@
 #ifndef SPHERE_HPP
 #define SPHERE_HPP
 
+#include "material.hpp"
+
 struct Sphere : public Hittable
 {
 	Double3 center;
 	double radius;
+	std::shared_ptr<Material> material_ptr;
 
 	Sphere()
 	{}
 
-	Sphere(Double3 const& new_center, double new_radius)
-		: center{ new_center }, radius{ new_radius }
+	Sphere(
+		Double3 const& new_center,
+		double new_radius,
+		std::shared_ptr<Material> new_material_ptr)
+		:
+		center{ new_center },
+		radius{ new_radius },
+		material_ptr{ new_material_ptr }
 	{}
 
 	virtual bool hit(
@@ -48,8 +57,11 @@ struct Sphere : public Hittable
 
 		record.t = root;
 		record.position = r.at(root);
+
 		Double3 outward_normal = (record.position - center) / radius;
 		record.setFaceNormal(r, outward_normal);
+
+		record.material_ptr = material_ptr;
 
 		return true;
 	}

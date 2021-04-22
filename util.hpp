@@ -22,30 +22,24 @@ inline double randomDouble()
 	return distribution(mersenne_twister);
 }
 
-inline double clamp(double d, double min_d, double max_h)
+inline double randomDouble(double min_d, double max_d)
+{
+	return min_d + (max_d - min_d) * randomDouble();
+}
+
+inline double clamp(double d, double min_d, double max_d)
 {
 	if (d < min_d)
 	{
 		return min_d;
 	}
 
-	if (d > max_h)
+	if (d > max_d)
 	{
-		return max_h;
+		return max_d;
 	}
-}
 
-void writeColor(std::ostream& os, Double3 const& color, int n_samples_per_pixel)
-{
-	double scale = 1.0 / n_samples_per_pixel;
-
-	double r = color.x * scale;
-	double g = color.y * scale;
-	double b = color.z * scale;
-
-	os << static_cast<int>(256 * clamp(r, 0.0, 0.999)) << ' '
-		<< static_cast<int>(256 * clamp(g, 0.0, 0.999)) << ' '
-		<< static_cast<int>(256 * clamp(b, 0.0, 0.999)) << '\n';
+	return d;
 }
 
 #endif // UTIL_HPP
